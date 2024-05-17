@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Food Ordering{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Food Ordering</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                    <li><a href="{{ url_for('main.menu') }}">Menu</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <aside id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <ul>
+            <li><a href="{{ url_for('main.home') }}">Home</a></li>
+            <li><a href="{{ url_for('main.menu') }}">Menu</a></li>
+            <li><a href="{{ url_for('main.account') }}">Account</a></li>
+            <li><a href="{{ url_for('admin.manage_menu') }}">Manage Menu</a></li>
+            <li><a href="{{ url_for('admin.manage_orders') }}">Manage Orders</a></li>
+        </ul>
+    </aside>
+
+    <div class="cover" onclick="toggleSidebar()"></div>
+
+    <main>
+        <button class="open-btn" onclick="toggleSidebar()">☰</button>
+        <div class="slider">
+            <div class="slides">
+                <img src="{{ url_for('static', filename='images/slide1.png') }}" alt="Slide 1">
+                <img src="{{ url_for('static', filename='images/slide2.png') }}" alt="Slide 2">
+                <img src="{{ url_for('static', filename='images/slide3.png') }}" alt="Slide 3">
+            </div>
+        </div>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

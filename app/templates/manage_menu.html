@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Manage Menu{% endblock %}
+{% block content %}
+<h2>Manage Menu</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.name.label }} {{ form.name }}</p>
+    <p>{{ form.price.label }} {{ form.price }}</p>
+    <p>{{ form.description.label }} {{ form.description }}</p>
+    <p>{{ form.picture.label }} {{ form.picture }}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+<ul>
+    {% for item in items %}
+    <li>
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <p>${{ item.price }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

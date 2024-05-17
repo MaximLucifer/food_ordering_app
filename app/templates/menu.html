@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Menu{% endblock %}
+{% block content %}
+<h2>Menu</h2>
+<ul class="menu-list">
+    {% for item in items %}
+    <li class="menu-item">
+        <img src="{{ url_for('static', filename='menu_pics/' ~ item.image_file) }}" alt="{{ item.name }}">
+        <div class="menu-info">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <p>${{ item.price }}</p>
+            <a href="{{ url_for('main.order', item_id=item.id) }}">Order Now</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

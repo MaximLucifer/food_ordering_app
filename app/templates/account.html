@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Account{% endblock %}
+{% block content %}
+<h2>Account</h2>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <p>{{ form.username.label }} {{ form.username }}</p>
+    <p>{{ form.email.label }} {{ form.email }}</p>
+    <p>{{ form.picture.label }} {{ form.picture }}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
