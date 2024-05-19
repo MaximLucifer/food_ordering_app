@@ -1,12 +1,28 @@
 {% extends "base.html" %}
 {% block title %}Account{% endblock %}
 {% block content %}
-<h2>Account</h2>
-<form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    <p>{{ form.username.label }} {{ form.username }}</p>
-    <p>{{ form.email.label }} {{ form.email }}</p>
-    <p>{{ form.picture.label }} {{ form.picture }}</p>
-    <p>{{ form.submit() }}</p>
-</form>
+<div class="account-container">
+    <h2>Account</h2>
+    <div class="account-info">
+        <img src="{{ url_for('static', filename='acc_pics/' ~ current_user.image_file) }}" alt="Profile Picture" class="account-avatar">
+        <div class="account-details">
+            <form method="POST" enctype="multipart/form-data" class="account-form">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    {{ form.username(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    {{ form.email(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="picture">Update Profile Picture:</label>
+                    {{ form.picture(class="form-control-file") }}
+                </div>
+                <p><button type="submit" class="form-submit-btn">Update</button></p>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

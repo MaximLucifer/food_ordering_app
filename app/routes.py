@@ -10,13 +10,31 @@ main = Blueprint('main', __name__)
 auth = Blueprint('auth', __name__)
 admin = Blueprint('admin', __name__)
 
+def save_picture_acc(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/acc_pics', picture_fn)
+    form_picture.save(picture_path)
+    return picture_fn
+
+def delete_picture_acc(picture_filename):
+    picture_path = os.path.join(current_app.root_path, 'static/acc_pics', picture_filename)
+    if os.path.exists(picture_path):
+        os.remove(picture_path)
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(current_app.root_path, 'static/images', picture_fn)
+    picture_path = os.path.join(current_app.root_path, 'static/menu_pics', picture_fn)
     form_picture.save(picture_path)
     return picture_fn
+
+def delete_picture(picture_filename):
+    picture_path = os.path.join(current_app.root_path, 'static/menu_pics', picture_filename)
+    if os.path.exists(picture_path):
+        os.remove(picture_path)
 
 @main.route("/")
 @main.route("/home")
@@ -69,6 +87,9 @@ def account():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        if form.picture.data:  # Проверка, был ли загружен файл
+            picture_file = save_picture_acc(form.picture.data)  # Функция для сохранения файла на сервере
+            current_user.image_file = picture_file  # Обновление поля с путем к файлу аватарки в базе данных
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('main.account'))
@@ -82,17 +103,45 @@ def account():
 def manage_menu():
     form = MenuItemForm()
     if form.validate_on_submit():
+        print("Form validated")  # Debugging information
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
-            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data, image_file=picture_file)
+            menu_item = MenuItem(
+                name=form.name.data, 
+                price=form.price.data, 
+                description=form.description.data, 
+                image_file=picture_file
+            )
+            print(f"Picture file saved: {picture_file}")  # Debugging information
         else:
-            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data)
+            menu_item = MenuItem(
+                name=form.name.data, 
+                price=form.price.data, 
+                description=form.description.data
+            )
+            print("No picture file provided")  # Debugging information
+
         db.session.add(menu_item)
         db.session.commit()
+        print("Menu item added to the database")  # Debugging information
         flash('Menu item has been added/updated!', 'success')
         return redirect(url_for('admin.manage_menu'))
+    else:
+        print("Form not validated")  # Debugging information
+
     items = MenuItem.query.all()
     return render_template('manage_menu.html', title='Manage Menu', form=form, items=items)
+
+@admin.route("/menu_item/<int:item_id>/delete", methods=['POST'])
+@login_required
+def delete_menu_item(item_id):
+    item = MenuItem.query.get_or_404(item_id)
+    if item.image_file != 'default.jpg':
+        delete_picture(item.image_file)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Menu item has been deleted!', 'success')
+    return redirect(url_for('admin.manage_menu'))
 
 @main.route("/order/<int:item_id>", methods=['GET', 'POST'])
 @login_required

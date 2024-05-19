@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'avif', 'gif'])])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
@@ -50,8 +50,8 @@ class MenuItemForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
     description = TextAreaField('Description')
-    picture = FileField('Update Menu Picture', validators=[FileAllowed(['jpg', 'png, avif'])])
-    submit = SubmitField('Add/Update Item')
+    picture = FileField('Update Menu Picture', validators=[FileAllowed(['jpg', 'png', 'avif'])])
+    submit = SubmitField('Add Item')
 
 class OrderForm(FlaskForm):
     menu_item_id = IntegerField('Menu Item ID', validators=[DataRequired()])

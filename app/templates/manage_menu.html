@@ -2,20 +2,26 @@
 {% block title %}Manage Menu{% endblock %}
 {% block content %}
 <h2>Manage Menu</h2>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <p>{{ form.name.label }} {{ form.name }}</p>
     <p>{{ form.price.label }} {{ form.price }}</p>
     <p>{{ form.description.label }} {{ form.description }}</p>
     <p>{{ form.picture.label }} {{ form.picture }}</p>
-    <p>{{ form.submit() }}</p>
+    <p><button type="submit" class="form-submit-btn">Add/Update Item</button></p>
 </form>
-<ul>
+<ul class="menu-list">
     {% for item in items %}
-    <li>
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.description }}</p>
-        <p>${{ item.price }}</p>
+    <li class="menu-item">
+        <img src="{{ url_for('static', filename='menu_pics/' ~ item.image_file) }}" alt="{{ item.name }}">
+        <div class="menu-info">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <p>${{ item.price }}</p>
+            <form action="{{ url_for('admin.delete_menu_item', item_id=item.id) }}" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
     </li>
     {% endfor %}
 </ul>

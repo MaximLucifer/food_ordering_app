@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h2>Welcome to Food Ordering</h2>
-<p>Order your favorite meals online!</p>
+<div class="home-container">
+    <h2>Welcome to Food Ordering</h2>
+    <p>Order your favorite meals online!</p>
+    <a href="{{ url_for('main.menu') }}" class="menu-button">View Menu</a>
+</div>
 {% endblock %}

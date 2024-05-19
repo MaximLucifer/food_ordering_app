@@ -1,12 +1,15 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    color: #333;
 }
 
+/* Header Styles */
 header {
-    background-color: #333;
+    background-color: #ff5733;
     color: #fff;
     padding: 10px 0;
     text-align: center;
@@ -14,6 +17,7 @@ header {
 
 header h1 {
     margin: 0;
+    font-size: 2.5em;
 }
 
 header nav ul {
@@ -32,8 +36,54 @@ header nav ul li a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.2em;
 }
 
+/* Home Container Styles */
+.home-container {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.home-container h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ff5733;
+}
+
+.home-container p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+/* Button Styles */
+.menu-button, .form-submit-btn, .delete-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    color: #fff;
+    background-color: #ff5733;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover {
+    background-color: #ff451b;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background-color: #d9534f;
+}
+
+.delete-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Sidebar Styles */
 aside#sidebar {
     position: fixed;
     top: 0;
@@ -80,6 +130,7 @@ aside#sidebar .close-btn {
     z-index: 900;
 }
 
+/* Main Content Styles */
 main {
     padding: 20px;
     margin-left: 0;
@@ -96,21 +147,25 @@ main .open-btn {
     margin-bottom: 10px;
 }
 
-.slider {
-    width: 50%;
-    overflow: hidden;
+/* Slider Styles */
+.slide.active {
+    opacity: 1; /* Делаем активный слайд видимым */
 }
 
-.slider .slides {
+.slides {
     display: flex;
-    animation: slide 50s;
+    transition: transform 0.5s ease; /* Добавляем плавное переключение слайдов */
 }
 
-.slider .slides img {
-    width: 50%;
-    height: auto;
+.slide {
+    opacity: 0; /* Скрываем все слайды */
+    width: 75%; /* Устанавливаем ширину слайда */
+    transition: opacity 0.9s ease; /* Добавляем плавный переход при изменении прозрачности */
+    margin-left: 150px;
+    margin-bottom: 30px;
 }
 
+/* Container Styles */
 .container {
     margin: 20px auto;
     padding: 20px;
@@ -119,15 +174,7 @@ main .open-btn {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes slide {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-100%); }
-    40% { transform: translateX(-200%); }
-    60% { transform: translateX(-300%); }
-    80% { transform: translateX(-400%); }
-    100% { transform: translateX(0); }
-}
-
+/* Menu List Styles */
 .menu-list {
     list-style-type: none;
     padding: 0;
@@ -151,10 +198,12 @@ main .open-btn {
 
 .menu-info {
     padding: 20px;
+    flex-grow: 1;
 }
 
 .menu-info h3 {
     margin: 0;
+    color: #ff5733;
 }
 
 .menu-info p {
@@ -164,13 +213,74 @@ main .open-btn {
 .menu-info a {
     display: inline-block;
     padding: 10px 15px;
-    background: #333;
+    background: #ff5733;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     transition: background 0.3s;
 }
 
-.menu-info a:hover {
-    background: #555;
+/* Form Styles */
+form p {
+    margin-bottom: 20px;
 }
+
+form label {
+    font-size: 1.2em;
+    color: #ff5733;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff5733;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+form .form-submit-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+form .form-submit-btn:hover {
+    background-color: #ff451b;
+    transform: scale(1.05);
+}
+
+/* Account Page Styles */
+.account-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+}
+
+.account-info img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%; /* Добавлено скругление углов для круглой формы аватара */
+}
+
+.account-form {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.account-form p {
+    margin-bottom: 20px;
+}
+
