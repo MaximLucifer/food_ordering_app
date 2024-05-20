@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Manage Orders{% endblock %}
 {% block content %}
-<h2>Manage Orders</h2>
-<ul>
-    {% for order in orders %}
-    <li>
-        <h3>Order #{{ order.id }}</h3>
-        <p>Status: {{ order.status }}</p>
-        <p>Total: ${{ order.total }}</p>
-        <p>Customer: {{ order.customer.username }}</p>
-        <p>Date: {{ order.date_ordered }}</p>
-        <ul>
-            {% for item in order.items %}
-            <li>{{ item.quantity }} x {{ item.menu_item.name }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
+<div class="manage-orders-container">
+    <h2>Manage Orders</h2>
+    <ul class="orders-list">
+        {% for order in orders %}
+        <li class="order-item">
+            <h3>Order #{{ order.id }}</h3>
+            <p>Status: {{ order.status }}</p>
+            <p>Total: ${{ order.total }}</p>
+            <p>Customer: {{ order.customer.username }}</p>
+            <p>Date: {{ order.date_ordered }}</p>
+            <ul>
+                {% for item in order.items %}
+                <li>{{ item.quantity }} x {{ item.menu_item.name }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

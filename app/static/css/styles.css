@@ -57,7 +57,7 @@ header nav ul li a {
 }
 
 /* Button Styles */
-.menu-button, .form-submit-btn, .delete-btn {
+.menu-button, .form-submit-btn, .delete-btn, .logout-button {
     display: inline-block;
     padding: 15px 30px;
     font-size: 1.5em;
@@ -68,9 +68,10 @@ header nav ul li a {
     text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 10px;
 }
 
-.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover {
+.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover, .logout-button:hover {
     background-color: #ff451b;
     transform: scale(1.05);
 }
@@ -90,10 +91,11 @@ aside#sidebar {
     left: -250px;
     width: 250px;
     height: 100%;
-    background-color: #333;
+    background-color: #ff5733;
     color: #fff;
     transition: left 0.3s;
     z-index: 1000;
+    padding-top: 20px;
 }
 
 aside#sidebar ul {
@@ -104,12 +106,20 @@ aside#sidebar ul {
 
 aside#sidebar ul li {
     padding: 15px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #ff451b;
 }
 
 aside#sidebar ul li a {
     color: #fff;
     text-decoration: none;
+    font-size: 1.2em;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+aside#sidebar ul li a:hover {
+    background-color: #ff451b;
+    padding-left: 15px;
 }
 
 aside#sidebar .close-btn {
@@ -117,6 +127,8 @@ aside#sidebar .close-btn {
     text-align: right;
     padding: 15px;
     cursor: pointer;
+    font-size: 1.5em;
+    color: #fff;
 }
 
 .cover {
@@ -142,27 +154,41 @@ main .open-btn {
     cursor: pointer;
     background: none;
     border: none;
-    color: #333;
+    color: #ff5733;
     display: inline-block;
     margin-bottom: 10px;
 }
 
 /* Slider Styles */
-.slide.active {
-    opacity: 1; /* Делаем активный слайд видимым */
+.slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 640px; /* Adjust based on your image heights */
 }
 
-.slides {
+.slider .slides {
     display: flex;
-    transition: transform 0.5s ease; /* Добавляем плавное переключение слайдов */
+    transition: transform 1s ease-in-out;
 }
 
-.slide {
-    opacity: 0; /* Скрываем все слайды */
-    width: 75%; /* Устанавливаем ширину слайда */
-    transition: opacity 0.9s ease; /* Добавляем плавный переход при изменении прозрачности */
-    margin-left: 150px;
-    margin-bottom: 30px;
+.slider .slide {
+    min-width: 50%;
+    transition: opacity 1s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 75%;
+    opacity: 0;
+    z-index: 1;
+    margin-left: 210px;
+    margin-right: 150px;
+}
+
+.slider .slide.active {
+    opacity: 1;
+    z-index: 2;
 }
 
 /* Container Styles */
@@ -172,6 +198,16 @@ main .open-btn {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for Slider */
+@keyframes slide {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-100%); }
+    40% { transform: translateX(-200%); }
+    60% { transform: translateX(-300%); }
+    80% { transform: translateX(-400%); }
+    100% { transform: translateX(0); }
 }
 
 /* Menu List Styles */
@@ -245,6 +281,7 @@ form .form-submit-btn {
     font-size: 1.2em;
     background-color: #ff5733;
     color: #fff;
+    margin-top: 15px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -273,14 +310,66 @@ form .form-submit-btn:hover {
     height: 150px;
     object-fit: cover;
     border-radius: 50%; /* Добавлено скругление углов для круглой формы аватара */
+    margin-right: 20px;
 }
 
 .account-form {
     margin-top: 20px;
-    margin-left: 20px;
 }
 
 .account-form p {
     margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.account-form label {
+    font-size: 1.2em;
+    color: #ff5733;
+}
+
+/* Login Container Styles */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #ff5733;
+}
+
+.login-container .login-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-container .login-form .form-group label {
+    font-size: 1.2em;
+    color: #ff5733;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login-container .login-form .form-group .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff5733;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.login-container .login-form .remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.login-container .login-form .remember-me .form-check-input {
+    margin-right: 10px;
 }
 

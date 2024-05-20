@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Order{% endblock %}
 {% block content %}
-<h2>Order {{ item.name }}</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <p>Price: ${{ item.price }}</p>
-    <p>{{ form.quantity.label }} {{ form.quantity }}</p>
-    <p>{{ form.submit() }}</p>
-</form>
+<div class="order-container">
+    <h2>Order {{ item.name }}</h2>
+    <form method="POST" class="order-form">
+        {{ form.hidden_tag() }}
+        <p>Price: ${{ item.price }}</p>
+        <div class="form-group">
+            <label for="quantity">{{ form.quantity.label }}</label>
+            {{ form.quantity(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-submit-btn">Place Order</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <p>{{ form.email.label }} {{ form.email }}</p>
-    <p>{{ form.password.label }} {{ form.password }}</p>
-    <p>{{ form.remember() }} {{ form.remember.label }}</p>
-    <p>{{ form.submit() }}</p>
-</form>
-<p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register here</a></p>
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="email">{{ form.email.label }}</label>
+            {{ form.email(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="password">{{ form.password.label }}</label>
+            {{ form.password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.remember(class="form-check-input") }}
+            <label for="remember" class="form-check-label">{{ form.remember.label }}</label>
+        </div>
+        <button type="submit" class="form-submit-btn">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register here</a></p>
+</div>
 {% endblock %}

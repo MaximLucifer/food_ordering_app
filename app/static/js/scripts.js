@@ -10,29 +10,16 @@ function toggleSidebar() {
     }
 }
 
-const slider = document.querySelector('.slider');
-const slides = document.querySelectorAll('.slide');
-const slideContainer = document.querySelector('.slides');
-const intervalTime = 5000; // Время переключения слайдов
-let slideInterval;
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    const totalSlides = slides.length;
 
-// Функция для переключения слайдов
-function nextSlide() {
-    // Получаем текущий активный слайд
-    const currentSlide = document.querySelector('.slide.active');
-    // Перемещаем текущий слайд в конец списка слайдов
-    slideContainer.appendChild(currentSlide);
+    function showNextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slides[currentSlide].classList.add('active');
+    }
 
-    // Получаем новый текущий слайд, который стал первым после перемещения
-    const newCurrentSlide = document.querySelector('.slide:first-child');
-    // Добавляем класс 'active' новому текущему слайду
-    newCurrentSlide.classList.add('active');
-}
-
-// Функция для запуска автоматического переключения слайдов
-function startSlideShow() {
-    slideInterval = setInterval(nextSlide, intervalTime);
-}
-
-// Запускаем автоматическое переключение слайдов при загрузке страницы
-startSlideShow();
+    setInterval(showNextSlide, 3000); // Change image every 3 seconds
+});
