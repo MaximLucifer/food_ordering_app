@@ -3,7 +3,7 @@
 {% block content %}
 <div class="manage-orders-container">
     <h2>Manage Orders</h2>
-    <ul class="orders-list">
+    <ul class="order-list">
         {% for order in orders %}
         <li class="order-item">
             <h3>Order #{{ order.id }}</h3>
@@ -11,9 +11,9 @@
             <p>Total: ${{ order.total }}</p>
             <p>Customer: {{ order.customer.username }}</p>
             <p>Date: {{ order.date_ordered }}</p>
-            <ul>
+            <ul class="order-items-list">
                 {% for item in order.items %}
-                <li>{{ item.quantity }} x {{ item.menu_item.name }}</li>
+                <li class="order-item-detail">{{ item.quantity }} x {{ item.menu_item.name }}</li>
                 {% endfor %}
             </ul>
         </li>

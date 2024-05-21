@@ -2,8 +2,31 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="home-container">
-    <h2>Welcome to Food Ordering</h2>
-    <p>Order your favorite meals online!</p>
-    <a href="{{ url_for('main.menu') }}" class="menu-button">View Menu</a>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide active">
+                <img src="{{ url_for('static', filename='images/slide1.png') }}" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/slide2.png') }}" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/slide3.png') }}" alt="Slide 3">
+            </div>
+        </div>
+    </div>
+    <h2>Menu</h2>
+    <div class="menu-list">
+        {% for item in menu_items %}
+        <div class="menu-item">
+            <h3>{{ item.name }}</h3>
+            <img src="{{ url_for('static', filename='menu_pics/' + item.image_file) }}" alt="{{ item.name }}">
+            <p>{{ item.description }}</p>
+            <p>Price: ${{ item.price }}</p>
+            <a href="{{ url_for('main.order', item_id=item.id) }}"><button class="add-to-cart-btn">Add to Cart</button></a>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
+

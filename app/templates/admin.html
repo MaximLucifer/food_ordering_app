@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Admin Panel</h2>
+    <div class="admin-section">
+        <h2>Manage Menu</h2>
+    <form method="POST" enctype="multipart/form-data" class="manage-menu-form">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label }} 
+            {{ form.name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.price.label }} 
+            {{ form.price(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.picture.label }} 
+            {{ form.picture(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="form-submit-btn") }}
+        </div>
+    </form>
+        <div class="menu-list">
+            {% for item in menu_items %}
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='menu_pics/' ~ item.image_file) }}" alt="{{ item.name }}">
+                <div class="menu-info">
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+                    <p>${{ item.price }}</p>
+                    <form action="{{ url_for('admin.admin_delete_menu_item', item_id=item.id) }}" method="POST">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <div class="manage-orders-container">
+            <h2>Manage Orders</h2>
+            <ul class="order-list">
+                {% for order in orders %}
+                <li class="order-item">
+                    <h3>Order #{{ order.id }}</h3>
+                    <p>Status: {{ order.status }}</p>
+                    <p>Total: ${{ order.total }}</p>
+                    <p>Customer: {{ order.customer.username }}</p>
+                    <p>Date: {{ order.date_ordered }}</p>
+                    <ul class="order-items-list">
+                        {% for item in order.items %}
+                        <li class="order-item-detail">{{ item.quantity }} x {{ item.menu_item.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <div class="manage-users-container"></div>
+        <h3>Manage Users</h3>
+        <ul class="users-list">
+            {% for user in users %}
+            <li class="user-item">
+                <div class="users-data">
+                    <strong>Имя пользователя: {{ user.username }}</strong> 
+                    <p>Email: {{ user.email }}</p>
+                </div>
+                <form method="POST" action="{{ url_for('admin.admin_update_user_role', user_id=user.id) }}">
+                    <select name="role" class="role-select">
+                        <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                    </select>
+                    <button type="submit" class="role-change-button">Update Role</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

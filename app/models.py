@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     orders = db.relationship('Order', backref='customer', lazy=True)
+    role = db.Column(db.String(10), nullable=False, default='user')
 
 class MenuItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)

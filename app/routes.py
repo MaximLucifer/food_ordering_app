@@ -5,6 +5,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.models import User, MenuItem, Order, OrderItem
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, MenuItemForm, OrderForm
+from app.decorators import role_required
 
 main = Blueprint('main', __name__)
 auth = Blueprint('auth', __name__)
@@ -39,7 +40,8 @@ def delete_picture(picture_filename):
 @main.route("/")
 @main.route("/home")
 def home():
-    return render_template('home.html')
+    menu_items = MenuItem.query.all()
+    return render_template('home.html', menu_items=menu_items)
 
 @main.route("/menu")
 def menu():
@@ -103,45 +105,82 @@ def account():
 def manage_menu():
     form = MenuItemForm()
     if form.validate_on_submit():
-        print("Form validated")  # Debugging information
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
-            menu_item = MenuItem(
-                name=form.name.data, 
-                price=form.price.data, 
-                description=form.description.data, 
-                image_file=picture_file
-            )
-            print(f"Picture file saved: {picture_file}")  # Debugging information
+            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data, image_file=picture_file)
         else:
-            menu_item = MenuItem(
-                name=form.name.data, 
-                price=form.price.data, 
-                description=form.description.data
-            )
-            print("No picture file provided")  # Debugging information
-
+            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data)
         db.session.add(menu_item)
         db.session.commit()
-        print("Menu item added to the database")  # Debugging information
         flash('Menu item has been added/updated!', 'success')
         return redirect(url_for('admin.manage_menu'))
-    else:
-        print("Form not validated")  # Debugging information
-
     items = MenuItem.query.all()
     return render_template('manage_menu.html', title='Manage Menu', form=form, items=items)
 
-@admin.route("/menu_item/<int:item_id>/delete", methods=['POST'])
+@admin.route('/admin', methods=['GET', 'POST'])
 @login_required
-def delete_menu_item(item_id):
+@role_required('admin')
+def administrator():
+    menu_items = MenuItem.query.all()
+    orders = Order.query.all()
+    users = User.query.all()
+    form = MenuItemForm()
+    return render_template('admin.html', title='Admin Panel', menu_items=menu_items, orders=orders, users=users, form=form)
+
+
+@admin.route("/admin/add_menu_item", methods=['GET', 'POST'])
+@login_required
+@role_required('admin')
+def admin_add_menu_item():
+    form = MenuItemForm()
+    if form.validate_on_submit():
+        picture_file = save_picture(form.picture.data)
+        menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data, image_file=picture_file)
+        db.session.add(menu_item)
+        db.session.commit()
+        flash('Menu item has been added!', 'success')
+        return redirect(url_for('admin.administrator'))
+    flash('Form not validated', 'danger')
+    return redirect(url_for('admin.administrator'))
+
+@admin.route("/admin/<int:item_id>/delete", methods=['POST'])
+@login_required
+@role_required('admin')
+def admin_delete_menu_item(item_id):
     item = MenuItem.query.get_or_404(item_id)
-    if item.image_file != 'default.jpg':
-        delete_picture(item.image_file)
     db.session.delete(item)
     db.session.commit()
     flash('Menu item has been deleted!', 'success')
-    return redirect(url_for('admin.manage_menu'))
+    return redirect(url_for('admin.administrator'))
+
+@admin.route('/admin/update_order_status/<int:order_id>', methods=['POST'])
+@login_required
+@role_required('admin')
+def admin_update_order_status(order_id):
+    order = Order.query.get_or_404(order_id)
+    new_status = request.form.get('status')
+    order.status = new_status
+    db.session.commit()
+    flash('Order status has been updated!', 'success')
+    return redirect(url_for('admin.administrator'))
+
+@admin.route("/manage_orders")
+@login_required
+@role_required('admin')
+def manage_orders():
+    orders = Order.query.all()
+    return render_template('manage_orders.html', title='Manage Orders', orders=orders)
+
+@admin.route('/admin/update_user_role/<int:user_id>', methods=['POST'])
+@login_required
+@role_required('admin')
+def admin_update_user_role(user_id):
+    user = User.query.get_or_404(user_id)
+    new_role = request.form.get('role')
+    user.role = new_role
+    db.session.commit()
+    flash('User role has been updated!', 'success')
+    return redirect(url_for('admin.administrator'))
 
 @main.route("/order/<int:item_id>", methods=['GET', 'POST'])
 @login_required
@@ -157,8 +196,3 @@ def order(item_id):
         return redirect(url_for('main.home'))
     return render_template('order.html', title='Order', item=item, form=form)
 
-@admin.route("/manage_orders")
-@login_required
-def manage_orders():
-    orders = Order.query.all()
-    return render_template('manage_orders.html', title='Manage Orders', orders=orders)

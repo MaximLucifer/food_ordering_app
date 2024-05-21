@@ -7,35 +7,35 @@ body {
     color: #333;
 }
 
+
 /* Header Styles */
 header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #ff5733;
+    padding: 10px 20px;
     color: #fff;
-    padding: 10px 0;
-    text-align: center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
+header .logo img {
+    height: 50px;
 }
 
 header nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
-    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 header nav ul li {
-    margin: 0 15px;
+    margin-left: 20px;
 }
 
 header nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
     font-size: 1.2em;
 }
 
@@ -44,6 +44,7 @@ header nav ul li a {
     text-align: center;
     padding: 50px 20px;
 }
+
 
 .home-container h2 {
     font-size: 2.5em;
@@ -57,7 +58,22 @@ header nav ul li a {
 }
 
 /* Button Styles */
-.menu-button, .form-submit-btn, .delete-btn, .logout-button {
+
+.logout-button, .login-button, .admin-panel-button {
+    background-color: #fff;
+    color: #ff5733;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout-button:hover, .login-button:hover, .admin-panel-button:hover {
+    background-color: #ff451b;
+    color: #fff;
+}
+
+.menu-button, .form-submit-btn, .role-change-button {
     display: inline-block;
     padding: 15px 30px;
     font-size: 1.5em;
@@ -69,66 +85,31 @@ header nav ul li a {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     margin-bottom: 10px;
-}
-
-.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover, .logout-button:hover {
-    background-color: #ff451b;
-    transform: scale(1.05);
+    margin-top: 20px;      
 }
 
 .delete-btn {
-    background-color: #d9534f;
-}
-
-.delete-btn:hover {
-    background-color: #c9302c;
-}
-
-/* Sidebar Styles */
-aside#sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background-color: #ff5733;
-    color: #fff;
-    transition: left 0.3s;
-    z-index: 1000;
-    padding-top: 20px;
-}
-
-aside#sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-aside#sidebar ul li {
-    padding: 15px;
-    border-bottom: 1px solid #ff451b;
-}
-
-aside#sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.2em;
-    display: block;
-    transition: background-color 0.3s;
-}
-
-aside#sidebar ul li a:hover {
-    background-color: #ff451b;
-    padding-left: 15px;
-}
-
-aside#sidebar .close-btn {
-    display: block;
-    text-align: right;
-    padding: 15px;
-    cursor: pointer;
+    position: absolute;
+    padding: 15px 30px;
     font-size: 1.5em;
     color: #fff;
+    background-color: #ff5733;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);     
+}
+
+
+.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover, .role-change-button:hover {
+    background-color: #ff451b;
+    transform: scale(1.05);
 }
 
 .cover {
@@ -159,36 +140,56 @@ main .open-btn {
     margin-bottom: 10px;
 }
 
+/* Dropdown Styles */
+.role-select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff5733;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #000; /* Цвет текста */
+}
+
+
+.role-select option {
+    background-color: #fff;
+    color: #000; /* Цвет текста опций */
+}
+
+.users-data {
+    font-weight: bold; /* Жирный текст */
+    color: #ff5733; /* Цвет текста */
+    font-size: 1.2em; /* Размер шрифта */
+    /* Другие свойства стиля, если нужно */
+}
+
 /* Slider Styles */
 .slider {
     width: 100%;
-    overflow: hidden;
+    height: 400px;
     position: relative;
-    height: 640px; /* Adjust based on your image heights */
+    overflow: hidden;
 }
 
-.slider .slides {
+.slides {
     display: flex;
+    width: 300%;
+    height: 100%;
     transition: transform 1s ease-in-out;
 }
 
-.slider .slide {
-    min-width: 50%;
-    transition: opacity 1s ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
+.slide {
+    width: 100%;
     height: 100%;
-    width: 75%;
-    opacity: 0;
-    z-index: 1;
-    margin-left: 210px;
-    margin-right: 150px;
 }
 
-.slider .slide.active {
-    opacity: 1;
-    z-index: 2;
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Container Styles */
@@ -212,38 +213,29 @@ main .open-btn {
 
 /* Menu List Styles */
 .menu-list {
-    list-style-type: none;
-    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .menu-item {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-    background: #fff;
-    border-radius: 8px;
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    width: 300px;
+    
 }
 
 .menu-item img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-}
-
-.menu-info {
-    padding: 20px;
-    flex-grow: 1;
-}
-
-.menu-info h3 {
-    margin: 0;
-    color: #ff5733;
-}
-
-.menu-info p {
-    margin: 5px 0;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
 }
 
 .menu-info a {
@@ -256,41 +248,90 @@ main .open-btn {
     transition: background 0.3s;
 }
 
-/* Form Styles */
-form p {
-    margin-bottom: 20px;
-}
-
-form label {
-    font-size: 1.2em;
-    color: #ff5733;
-}
-
-form input, form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ff5733;
-    border-radius: 8px;
-    font-size: 1em;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-form .form-submit-btn {
-    padding: 15px 30px;
-    font-size: 1.2em;
+.add-to-cart-btn {
+    position: absolute;
     background-color: #ff5733;
     color: #fff;
-    margin-top: 15px;
     border: none;
-    border-radius: 8px;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-form .form-submit-btn:hover {
+.add-to-cart-btn:hover {
     background-color: #ff451b;
-    transform: scale(1.05);
+}
+
+
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-container, .order-container, .manage-orders-container, .manage-menu-container, .users-list-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form, .order-form, .manage-menu-form, .users-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-submit-btn {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-submit-btn:hover {
+    background-color: #ff451b;
+}
+
+.order-list, .users-list {
+    list-style: none;
+    padding: 0;
+}
+
+.order-item, .user-item {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-item-detail {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
 }
 
 /* Account Page Styles */
@@ -373,3 +414,39 @@ form .form-submit-btn:hover {
     margin-right: 10px;
 }
 
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-content h2 {
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.footer-content .social-media {
+    margin-top: 10px;
+}
+
+.footer-content .social-media a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.footer-content .social-media a:hover {
+    color: #ff5733;
+}
