@@ -43,6 +43,10 @@ def home():
     menu_items = MenuItem.query.all()
     return render_template('home.html', menu_items=menu_items)
 
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
 @main.route("/menu")
 def menu():
     items = MenuItem.query.all()
@@ -188,8 +192,9 @@ def order(item_id):
     item = MenuItem.query.get_or_404(item_id)
     form = OrderForm()
     if form.validate_on_submit():
-        order_item = OrderItem(quantity=form.quantity.data, menu_item_id=item.id)
-        order = Order(customer=current_user, total=item.price * form.quantity.data, items=[order_item])
+        order_item = OrderItem(quantity=form.quantity.data, menu_item_id=item.id, order_id=current_user.id)
+        order = Order(total=item.price * form.quantity.data, user_id=current_user.id, items=[order_item])
+        db.session.add(order_item)
         db.session.add(order)
         db.session.commit()
         flash('Your order has been placed!', 'success')

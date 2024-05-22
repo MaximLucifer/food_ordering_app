@@ -450,3 +450,40 @@ footer {
 .footer-content .social-media a:hover {
     color: #ff5733;
 }
+
+.carousel-item {
+    justify-content: center;
+}
+
+.card {
+    width: 18rem;
+    margin: 0 auto;
+}
+
+/* About Us page */
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.about-content {
+    flex: 3;
+    padding-right: 20px;
+}
+
+.about-logo {
+    flex: 1;
+    text-align: right;
+}
+
+.about-logo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
