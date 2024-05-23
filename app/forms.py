@@ -6,55 +6,55 @@ from app.models import User
 from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Имя пользователя', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    role = StringField('Role (user/admin)', default='user')  # Add role field
-    submit = SubmitField('Register')
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    confirm_password = PasswordField('Подтвердите пароль', validators=[DataRequired(), EqualTo('password')])
+    role = StringField('Роль (пользователь/админ)', default='пользователь')  # Add role field
+    submit = SubmitField('Регистрация')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is taken. Please choose a different one.')
+            raise ValidationError('Это имя пользователя занято. Пожалуйста, выберите другое.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError('That email is taken. Please choose a different one.')
+            raise ValidationError('Этот Email занят. Пожалуйста, введиет другой.')
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    username = StringField('Имя пользователя', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'avif', 'gif'])])
-    submit = SubmitField('Update')
+    picture = FileField('Обновить фотографию профиля', validators=[FileAllowed(['jpg', 'png', 'avif', 'gif'])])
+    submit = SubmitField('Обновить')
 
     def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('That username is taken. Please choose a different one.')
+                raise ValidationError('Это имя пользователя занято. Пожалуйста, выберите другое.')
 
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
-                raise ValidationError('That email is taken. Please choose a different one.')
+                raise ValidationError('Этот Email занят. Пожалуйста, введите другой.')
 
 class MenuItemForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    price = FloatField('Price', validators=[DataRequired()])
-    description = TextAreaField('Description')
-    picture = FileField('Update Menu Picture', validators=[FileAllowed(['jpg', 'png', 'avif'])])
-    submit = SubmitField('Add Item')
+    name = StringField('Название', validators=[DataRequired()])
+    price = FloatField('Цена', validators=[DataRequired()])
+    description = TextAreaField('Описание')
+    picture = FileField('Установить фотографию', validators=[FileAllowed(['jpg', 'png', 'avif'])])
+    submit = SubmitField('Добавить')
 
 class OrderForm(FlaskForm):
-    menu_item_id = IntegerField('Menu Item ID', validators=[DataRequired()])
-    quantity = IntegerField('Quantity', validators=[DataRequired()])
-    submit = SubmitField('Order')
+    menu_item_id = IntegerField('ID меню', validators=[DataRequired()])
+    quantity = IntegerField('Количество', validators=[DataRequired()])
+    submit = SubmitField('Заказать')

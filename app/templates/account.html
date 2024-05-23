@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Account{% endblock %}
+{% block title %}Аккаунт{% endblock %}
 {% block content %}
 <div class="account-container">
-    <h2>Account</h2>
+    <h2>Аккаунт</h2>
     <div class="account-info">
-        <img src="{{ url_for('static', filename='acc_pics/' ~ current_user.image_file) }}" alt="Profile Picture" class="account-avatar">
+        <img src="{{ url_for('static', filename='acc_pics/' ~ current_user.image_file) }}" alt="Аватар профиля" class="account-avatar">
         <div class="account-details">
             <form method="POST" enctype="multipart/form-data" class="account-form">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Имя пользователя:</label>
                     {{ form.username(class="form-control") }}
                 </div>
                 <div class="form-group">
@@ -17,11 +17,30 @@
                     {{ form.email(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    <label for="picture">Update Profile Picture:</label>
+                    <label for="picture">Обновить аватар профиля:</label>
                     {{ form.picture(class="form-control-file") }}
                 </div>
-                <button type="submit" class="btn btn-primary form-submit-btn">Update</button>
+                <button type="submit" class="btn btn-primary form-submit-btn">Обновить</button>
             </form>
+        </div>
+            <div class="profile-orders-container">
+                <h3>Активные заказы</h3>
+                <ul class="order-list">
+                    {% for order in active_orders %}
+                    <li class="order-item">
+                        <h4>Заказ #{{ order.id }}</h4>
+                        <p>Статус: {{ order.status }}</p>
+                        <p>Итого: ₽{{ order.total }}</p>
+                        <p>Дата: {{ order.date_ordered }}</p>
+                        <ul class="order-items-list">
+                            {% for item in order.items %}
+                            <li class="order-item-detail">{{ item.quantity }} x {{ item.menu_item.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 </div>

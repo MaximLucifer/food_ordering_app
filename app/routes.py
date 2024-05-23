@@ -62,7 +62,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
+        flash('Ваш аккаунт создан! Теперь вы можете войти', 'success')
         return redirect(url_for('auth.login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -78,7 +78,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
+            flash('Вход не удался. Пожалуйста, проверьте логин или пароль', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 @auth.route("/logout")
@@ -90,6 +90,7 @@ def logout():
 @login_required
 def account():
     form = UpdateAccountForm()
+    active_orders = Order.query.filter_by(user_id=current_user.id).filter(Order.status != 'Завершён').all()
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -97,29 +98,12 @@ def account():
             picture_file = save_picture_acc(form.picture.data)  # Функция для сохранения файла на сервере
             current_user.image_file = picture_file  # Обновление поля с путем к файлу аватарки в базе данных
         db.session.commit()
-        flash('Your account has been updated!', 'success')
+        flash('Ваш аккаунт обновлен!', 'success')
         return redirect(url_for('main.account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    return render_template('account.html', title='Account', form=form)
-
-@admin.route("/manage_menu", methods=['GET', 'POST'])
-@login_required
-def manage_menu():
-    form = MenuItemForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data, image_file=picture_file)
-        else:
-            menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data)
-        db.session.add(menu_item)
-        db.session.commit()
-        flash('Menu item has been added/updated!', 'success')
-        return redirect(url_for('admin.manage_menu'))
-    items = MenuItem.query.all()
-    return render_template('manage_menu.html', title='Manage Menu', form=form, items=items)
+    return render_template('account.html', title='Account', form=form, active_orders=active_orders)
 
 @admin.route('/admin', methods=['GET', 'POST'])
 @login_required
@@ -142,7 +126,7 @@ def admin_add_menu_item():
         menu_item = MenuItem(name=form.name.data, price=form.price.data, description=form.description.data, image_file=picture_file)
         db.session.add(menu_item)
         db.session.commit()
-        flash('Menu item has been added!', 'success')
+        flash('Блюдо в меню добавлено!', 'success')
         return redirect(url_for('admin.administrator'))
     flash('Form not validated', 'danger')
     return redirect(url_for('admin.administrator'))
@@ -154,7 +138,7 @@ def admin_delete_menu_item(item_id):
     item = MenuItem.query.get_or_404(item_id)
     db.session.delete(item)
     db.session.commit()
-    flash('Menu item has been deleted!', 'success')
+    flash('Блюдо было удалено из меню!', 'success')
     return redirect(url_for('admin.administrator'))
 
 @admin.route('/admin/update_order_status/<int:order_id>', methods=['POST'])
@@ -165,15 +149,30 @@ def admin_update_order_status(order_id):
     new_status = request.form.get('status')
     order.status = new_status
     db.session.commit()
-    flash('Order status has been updated!', 'success')
+    flash('Статус заказа был обновлён!', 'success')
     return redirect(url_for('admin.administrator'))
 
-@admin.route("/manage_orders")
+@admin.route('/admin/complete_order/<int:order_id>', methods=['POST'])
 @login_required
 @role_required('admin')
-def manage_orders():
-    orders = Order.query.all()
-    return render_template('manage_orders.html', title='Manage Orders', orders=orders)
+def admin_complete_order(order_id):
+    order = Order.query.get_or_404(order_id)
+    order.status = 'Завершён'
+    db.session.commit()
+    flash('Статус заказа был помечен как завершённый!', 'success')
+    return redirect(url_for('admin.administrator'))
+
+@admin.route('/admin/delete_order/<int:order_id>', methods=['POST'])
+@login_required
+@role_required('admin')
+def admin_delete_order(order_id, menu_item_id):
+    order = Order.query.get_or_404(order_id)
+    order_item = OrderItem.query.filter_by(menu_item_id=menu_item_id).first()
+    db.session.delete(order_item)
+    db.session.delete(order)
+    db.session.commit()
+    flash('Заказ удалён!', 'success')
+    return redirect(url_for('admin.administrator'))
 
 @admin.route('/admin/update_user_role/<int:user_id>', methods=['POST'])
 @login_required
@@ -183,7 +182,7 @@ def admin_update_user_role(user_id):
     new_role = request.form.get('role')
     user.role = new_role
     db.session.commit()
-    flash('User role has been updated!', 'success')
+    flash('Роль пользователя была обновлена!', 'success')
     return redirect(url_for('admin.administrator'))
 
 @main.route("/order/<int:item_id>", methods=['GET', 'POST'])
@@ -191,13 +190,20 @@ def admin_update_user_role(user_id):
 def order(item_id):
     item = MenuItem.query.get_or_404(item_id)
     form = OrderForm()
+
+    form.menu_item_id.data = item.id
+    
     if form.validate_on_submit():
+        print("Form validated successfully")
         order_item = OrderItem(quantity=form.quantity.data, menu_item_id=item.id, order_id=current_user.id)
         order = Order(total=item.price * form.quantity.data, user_id=current_user.id, items=[order_item])
         db.session.add(order_item)
         db.session.add(order)
         db.session.commit()
-        flash('Your order has been placed!', 'success')
-        return redirect(url_for('main.home'))
+        flash('Заказ был размещён!', 'success')
+        return redirect(url_for('main.account'))
+    else:
+        print("Form not validated")
+        print(form.errors)
     return render_template('order.html', title='Order', item=item, form=form)
 

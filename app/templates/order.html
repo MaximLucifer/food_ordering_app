@@ -1,11 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Order{% endblock %}
+{% block title %}Заказ{% endblock %}
 {% block content %}
 <div class="order-container">
-    <h2>Order {{ item.name }}</h2>
+    <h2>Заказ {{ item.name }}</h2>
     <form method="POST" action="{{ url_for('main.order', item_id=item.id) }}" class="order-form">
         {{ form.hidden_tag() }}
-        <p>Price: ${{ item.price }}</p>
+        
+        <img src="{{ url_for('static', filename='menu_pics/' ~ item.image_file) }}" alt="{{ item.name }}">
+        <p>Цена: ₽{{ item.price }}</p>
         <div class="form-group">
             {{ form.quantity.label }} 
             {{ form.quantity(class="form-control") }}

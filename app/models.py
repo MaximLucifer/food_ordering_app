@@ -25,7 +25,7 @@ class MenuItem(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_ordered = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    status = db.Column(db.String(20), nullable=False, default='Pending')
+    status = db.Column(db.String(20), nullable=False, default='В процессе')
     total = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     items = db.relationship('OrderItem', backref='order', lazy=True)
@@ -34,5 +34,5 @@ class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
     menu_item_id = db.Column(db.Integer, db.ForeignKey('menu_item.id'), nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=True)
     menu_item = db.relationship('MenuItem')
