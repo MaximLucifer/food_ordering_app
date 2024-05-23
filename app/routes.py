@@ -90,7 +90,7 @@ def logout():
 @login_required
 def account():
     form = UpdateAccountForm()
-    active_orders = Order.query.filter_by(user_id=current_user.id).filter(Order.status != 'Завершён').all()
+    active_orders = Order.query.filter_by(user_id=current_user.id).filter(Order.status != 'Отменён').all()
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -138,7 +138,7 @@ def admin_delete_menu_item(item_id):
     item = MenuItem.query.get_or_404(item_id)
     db.session.delete(item)
     db.session.commit()
-    flash('Блюдо было удалено из меню!', 'success')
+    flash('Блюдо удалено из меню!', 'success')
     return redirect(url_for('admin.administrator'))
 
 @admin.route('/admin/update_order_status/<int:order_id>', methods=['POST'])
@@ -152,23 +152,11 @@ def admin_update_order_status(order_id):
     flash('Статус заказа был обновлён!', 'success')
     return redirect(url_for('admin.administrator'))
 
-@admin.route('/admin/complete_order/<int:order_id>', methods=['POST'])
-@login_required
-@role_required('admin')
-def admin_complete_order(order_id):
-    order = Order.query.get_or_404(order_id)
-    order.status = 'Завершён'
-    db.session.commit()
-    flash('Статус заказа был помечен как завершённый!', 'success')
-    return redirect(url_for('admin.administrator'))
-
 @admin.route('/admin/delete_order/<int:order_id>', methods=['POST'])
 @login_required
 @role_required('admin')
-def admin_delete_order(order_id, menu_item_id):
+def admin_delete_order(order_id):
     order = Order.query.get_or_404(order_id)
-    order_item = OrderItem.query.filter_by(menu_item_id=menu_item_id).first()
-    db.session.delete(order_item)
     db.session.delete(order)
     db.session.commit()
     flash('Заказ удалён!', 'success')

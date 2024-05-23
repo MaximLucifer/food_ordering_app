@@ -1,0 +1,32 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "DatabasePRAKTIKA",
+            "database": "spractich1",
+            "username": "root",
+            "connectionTimeout": 600,
+            "password": "Maks132456"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "food_ordering_app",
+            "database": "food_ordering_app",
+            "username": "root",
+            "password": "Maks13245612"
+        }
+    ]
+}

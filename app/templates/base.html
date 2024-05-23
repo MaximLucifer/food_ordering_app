@@ -16,7 +16,7 @@
             <ul>
                 <li><a href="{{ url_for('main.home') }}">Главная</a></li>
                 <li><a href="{{ url_for('main.about')}}">О нас</a></li>
-                <li><a href="">Контакты</a></li>
+                <li><a href="#contacts">Контакты</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('main.account') }}" class="logout-button">Аккаунт</a></li>
                     <li><a href="{{ url_for('auth.logout') }}" class="logout-button">Выйти</a></li>
@@ -35,7 +35,7 @@
     </main>
     <footer>
         <div class="footer-content">
-            <h2>Контакты</h2>
+            <h2 id="contacts">Контакты</h2>
             <p><strong>Адрес:</strong> ул. Пиццы, д. 123, Город Еды, ФК 12345</p>
             <p><strong>Телефон:</strong> (123) 456-7890</p>
             <p><strong>Email:</strong> contact@pizza.com</p>

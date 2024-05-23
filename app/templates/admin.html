@@ -65,15 +65,11 @@
                 <!-- Форма для обновления статуса заказа -->
                 <form method="POST" action="{{ url_for('admin.admin_update_order_status', order_id=order.id) }}">
                     <select name="status">
-                        <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>В ожидании</option>
-                        <option value="Completed" {% if order.status == 'Completed' %}selected{% endif %}>Завершен</option>
-                        <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Отменен</option>
+                        <option value="В процессе" {% if order.status == 'В процессе' %}selected{% endif %}>В процессе</option>
+                        <option value="Завершён" {% if order.status == 'Завершён' %}selected{% endif %}>Завершен</option>
+                        <option value="Отменён" {% if order.status == 'Отменён' %}selected{% endif %}>Отменен</option>
                     </select>
                     <button type="submit" class="btn btn-primary">Обновить статус</button>
-                </form>
-                <!-- Форма для завершения заказа -->
-                <form method="POST" action="{{ url_for('admin.admin_complete_order', order_id=order.id) }}">
-                    <button type="submit" class="btn btn-success">Завершить</button>
                 </form>
                 <!-- Форма для удаления заказа -->
                 <form method="POST" action="{{ url_for('admin.admin_delete_order', order_id=order.id) }}">

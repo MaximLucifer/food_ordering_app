@@ -256,7 +256,7 @@ main .open-btn {
 }
 
 .add-to-cart-btn {
-    position: absolute;
+    position: relative;
     background-color: #ff5733;
     color: #fff;
     border: none;
