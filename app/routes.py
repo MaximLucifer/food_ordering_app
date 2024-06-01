@@ -52,6 +52,10 @@ def menu():
     items = MenuItem.query.all()
     return render_template('menu.html', items=items)
 
+@main.route('/contacts')
+def contacts():
+    return render_template('contacts.html')
+
 @auth.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -178,13 +182,20 @@ def admin_update_user_role(user_id):
 def order(item_id):
     item = MenuItem.query.get_or_404(item_id)
     form = OrderForm()
-
     form.menu_item_id.data = item.id
-    
     if form.validate_on_submit():
-        print("Form validated successfully")
-        order_item = OrderItem(quantity=form.quantity.data, menu_item_id=item.id, order_id=current_user.id)
-        order = Order(total=item.price * form.quantity.data, user_id=current_user.id, items=[order_item])
+        order_item = OrderItem(
+            quantity=form.quantity.data,
+            menu_item_id=item.id,
+            order_id=current_user.id,
+            size=form.size.data,
+            crust=form.crust.data
+        )
+        order = Order(
+            total=item.price * form.quantity.data,
+            user_id=current_user.id,
+            items=[order_item]
+        )
         db.session.add(order_item)
         db.session.add(order)
         db.session.commit()

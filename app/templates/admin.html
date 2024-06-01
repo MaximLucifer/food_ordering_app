@@ -65,7 +65,8 @@
                 <!-- Форма для обновления статуса заказа -->
                 <form method="POST" action="{{ url_for('admin.admin_update_order_status', order_id=order.id) }}">
                     <select name="status">
-                        <option value="В процессе" {% if order.status == 'В процессе' %}selected{% endif %}>В процессе</option>
+                        <option value="Готовится" {% if order.status == 'Готовится' %}selected{% endif %}>Готовится</option>
+                        <option value="В доставке" {% if order.status == 'В доставке' %}selected{% endif %}>В доставке</option>
                         <option value="Завершён" {% if order.status == 'Завершён' %}selected{% endif %}>Завершен</option>
                         <option value="Отменён" {% if order.status == 'Отменён' %}selected{% endif %}>Отменен</option>
                     </select>

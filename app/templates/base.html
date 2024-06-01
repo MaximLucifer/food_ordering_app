@@ -15,8 +15,8 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('main.home') }}">Главная</a></li>
-                <li><a href="{{ url_for('main.about')}}">О нас</a></li>
-                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="{{ url_for('main.about') }}">О нас</a></li>
+                <li><a href="{{ url_for('main.contacts') }}">Контакты</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('main.account') }}" class="logout-button">Аккаунт</a></li>
                     <li><a href="{{ url_for('auth.logout') }}" class="logout-button">Выйти</a></li>

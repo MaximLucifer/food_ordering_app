@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<div class="contacts-container">
+    <h2>Контакты</h2>
+    <p><strong>Адрес:</strong> ул. Пиццы, д. 123, Город Еды, ФК 12345</p>
+    <p><strong>Телефон:</strong> (123) 456-7890</p>
+    <p><strong>Email:</strong> contact@pizza.com</p>
+    <div id="map">
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adf385f4abddcdceb09c163aab266c086e77638285287c33fdbd540b1fcba93d0&amp;width=570&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+    </div>
+</div>
+{% endblock %}

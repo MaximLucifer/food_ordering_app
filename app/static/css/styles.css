@@ -7,7 +7,6 @@ body {
     color: #333;
 }
 
-
 /* Header Styles */
 header {
     display: flex;
@@ -39,12 +38,25 @@ header nav ul li a {
     font-size: 1.2em;
 }
 
+/* Container Styles */
+.container, .auth-container, .order-container, .manage-orders-container, .manage-menu-container, .users-list-container, .contacts-container, .about-container, .profile-orders-container {
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.about-container, .profile-orders-container {
+    max-width: 1250px;
+}
+
 /* Home Container Styles */
 .home-container {
     text-align: center;
     padding: 50px 20px;
 }
-
 
 .home-container h2 {
     font-size: 2.5em;
@@ -58,7 +70,35 @@ header nav ul li a {
 }
 
 /* Button Styles */
+button, .btn, .form-submit-btn, .menu-button, .delete-btn, .role-change-button, .add-to-cart-btn {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    margin: 10px 0;
+    transition: background-color 0.3s, transform 0.3s;
+}
 
+button:hover, .btn:hover, .form-submit-btn:hover, .menu-button:hover, .delete-btn:hover, .role-change-button:hover, .add-to-cart-btn:hover {
+    background-color: #ff451b;
+    transform: scale(1.05);
+}
+
+.menu-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.delete-btn {
+    margin-top: 15px;
+}
+
+/* Specific Button Styles */
 .logout-button, .login-button, .admin-panel-button {
     background-color: #fff;
     color: #ff5733;
@@ -71,51 +111,6 @@ header nav ul li a {
 .logout-button:hover, .login-button:hover, .admin-panel-button:hover {
     background-color: #ff451b;
     color: #fff;
-}
-
-.menu-button, .form-submit-btn, .role-change-button {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 1.5em;
-    color: #fff;
-    background-color: #ff5733;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    margin-bottom: 10px;
-    margin-top: 20px;      
-}
-
-.delete-btn {
-    padding: 10px 15px;
-    font-size: 1em;
-    color: #fff;
-    background-color: #ff5733;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    margin-top: 15px;
-}
-
-
-.menu-button:hover, .form-submit-btn:hover, .delete-btn:hover, .role-change-button:hover {
-    background-color: #ff451b;
-    transform: scale(1.05);
-}
-
-.cover {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 900;
 }
 
 /* Main Content Styles */
@@ -135,30 +130,149 @@ main .open-btn {
     margin-bottom: 10px;
 }
 
-/* Dropdown Styles */
-.role-select {
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-form, .auth-form, .order-form, .manage-menu-form, .users-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-submit-btn {
+    margin-top: 10px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-content h2 {
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.footer-content .social-media {
+    margin-top: 10px;
+}
+
+.footer-content .social-media a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.footer-content .social-media a:hover {
+    color: #ff5733;
+}
+
+/* Specific Elements */
+.profile-orders-container {
+    margin-left: 150px;
+    padding-left: 20px;
+    width: 80%;
+}
+
+.contacts-container #map {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+}
+
+.account-info {
+    display: flex;
+    align-items: flex-start;
+}
+
+.account-info img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-bottom: 150px;
+}
+
+.account-form p, .account-form label {
+    margin-left: 20px;
+}
+
+.account-form label {
+    font-size: 1.2em;
+    color: #ff5733;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #ff5733;
+}
+
+.login-container .login-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-container .login-form .form-group label {
+    font-size: 1.2em;
+    color: #ff5733;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login-container .login-form .form-group .form-control {
     width: 100%;
     padding: 10px;
     border: 2px solid #ff5733;
     border-radius: 8px;
     font-size: 1em;
-    margin-top: 5px;
     box-sizing: border-box;
-    background-color: #fff;
-    color: #000; /* Цвет текста */
 }
 
-
-.role-select option {
-    background-color: #fff;
-    color: #000; /* Цвет текста опций */
+.login-container .login-form .remember-me {
+    display: flex;
+    align-items: center;
 }
 
-.users-data {
-    font-weight: bold; /* Жирный текст */
-    color: #ff5733; /* Цвет текста */
-    font-size: 1.2em; /* Размер шрифта */
-    /* Другие свойства стиля, если нужно */
+.login-container .login-form .remember-me .form-check-input {
+    margin-right: 10px;
 }
 
 /* Slider Styles */
@@ -185,15 +299,6 @@ main .open-btn {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-/* Container Styles */
-.container {
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Animation for Slider */
@@ -236,7 +341,6 @@ main .open-btn {
     flex-grow: 1;
 }
 
-
 .menu-item:hover .delete-btn {
     background-color: #ff3d00;
 }
@@ -255,296 +359,26 @@ main .open-btn {
     background: #ff3d00;
 }
 
-.add-to-cart-btn {
-    position: relative;
-    background-color: #ff5733;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.add-to-cart-btn:hover {
-    background-color: #ff451b;
-}
-
-
-
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.auth-container, .order-container, .manage-orders-container, .manage-menu-container, .users-list-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.auth-form, .order-form, .manage-menu-form, .users-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-    text-align: left;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.form-submit-btn {
-    background-color: #ff5733;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.form-submit-btn:hover {
-    background-color: #ff451b;
-}
-
-.order-list, .users-list {
-    list-style: none;
-    padding: 0;
-}
-
-.order-item, .user-item {
-    background-color: #fff;
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.order-item-detail {
-    background-color: #f4f4f4;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-}
-
-/* Account Page Styles */
-.account-container {
-    max-width: 1250px;
-    margin: 0;
-    margin-left: 250px;
-    padding: 20px;
-}
-
-.account-info {
-    display: flex;
-    align-items: flex-start;
-}
-
-.account-info img {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%; /* Добавлено скругление углов для круглой формы аватара */
-    margin-right: 20px;
-    margin-bottom: 150px;
-}
-
-.account-form {
-    margin-top: 20px;
-}
-
-.account-form p {
-    margin-bottom: 20px;
-    margin-left: 20px;
-}
-
-.account-form label {
-    font-size: 1.2em;
-    color: #ff5733;
-}
-
-/* Login Container Styles */
-.login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-    color: #ff5733;
-}
-
-.login-container .login-form .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.login-container .login-form .form-group label {
-    font-size: 1.2em;
-    color: #ff5733;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.login-container .login-form .form-group .form-control {
+/* Dropdown Styles */
+.role-select {
     width: 100%;
     padding: 10px;
     border: 2px solid #ff5733;
     border-radius: 8px;
     font-size: 1em;
+    margin-top: 5px;
     box-sizing: border-box;
+    background-color: #fff;
+    color: #000;
 }
 
-.login-container .login-form .remember-me {
-    display: flex;
-    align-items: center;
+.role-select option {
+    background-color: #fff;
+    color: #000;
 }
 
-.login-container .login-form .remember-me .form-check-input {
-    margin-right: 10px;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 50px;
-}
-
-.footer-content {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.footer-content h2 {
-    margin-bottom: 10px;
-}
-
-.footer-content p {
-    margin: 5px 0;
-}
-
-.footer-content .social-media {
-    margin-top: 10px;
-}
-
-.footer-content .social-media a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 1.2em;
-}
-
-.footer-content .social-media a:hover {
+.users-data {
+    font-weight: bold;
     color: #ff5733;
-}
-
-.carousel-item {
-    justify-content: center;
-}
-
-.card {
-    width: 18rem;
-    margin: 0 auto;
-}
-
-/* About Us page */
-.about-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    margin: 20px;
-    border-radius: 8px;
-}
-
-.about-content {
-    flex: 3;
-    padding-right: 20px;
-}
-
-.about-logo {
-    flex: 1;
-    text-align: right;
-}
-
-.about-logo img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-/* Стили для контейнера заказов профиля */
-.profile-orders-container {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-left: 150px; /* Добавляем отступ слева, чтобы сдвинуть блок вправо */
-    padding-left: 20px;
-    margin-right: 0; /* Убираем отступ справа */
-    width: 80%; /* Устанавливаем ширину блока */
-    align-items: flex-end;
-}
-
-.profile-orders-container h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-}
-
-.profile-orders-container .order-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.profile-orders-container .order-item {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.profile-orders-container .order-item h4 {
-    margin-bottom: 5px;
     font-size: 1.2em;
-}
-
-.profile-orders-container .order-item p {
-    margin: 5px 0;
-}
-
-.profile-orders-container .order-items-list {
-    margin-top: 10px;
-    padding-left: 20px;
-}
-
-.profile-orders-container .order-item-detail {
-    margin-bottom: 5px;
-    font-size: 0.9em;
 }

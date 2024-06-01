@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, TextAreaField, IntegerField, FileField, DecimalField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, TextAreaField, IntegerField, FileField, DecimalField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_wtf.file import FileAllowed
 from app.models import User
@@ -57,4 +57,6 @@ class MenuItemForm(FlaskForm):
 class OrderForm(FlaskForm):
     menu_item_id = IntegerField('ID меню', validators=[DataRequired()])
     quantity = IntegerField('Количество', validators=[DataRequired()])
+    size = SelectField('Размер', choices=[('small', 'Маленькая'), ('medium', 'Средняя'), ('large', 'Большая')])
+    crust = SelectField('Тип теста', choices=[('thin', 'Тонкое'), ('standard', 'Стандартное')])
     submit = SubmitField('Заказать')
