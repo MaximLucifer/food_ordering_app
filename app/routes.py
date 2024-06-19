@@ -19,11 +19,6 @@ def save_picture_acc(form_picture):
     form_picture.save(picture_path)
     return picture_fn
 
-def delete_picture_acc(picture_filename):
-    picture_path = os.path.join(current_app.root_path, 'static/acc_pics', picture_filename)
-    if os.path.exists(picture_path):
-        os.remove(picture_path)
-
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -31,6 +26,11 @@ def save_picture(form_picture):
     picture_path = os.path.join(current_app.root_path, 'static/menu_pics', picture_fn)
     form_picture.save(picture_path)
     return picture_fn
+
+def delete_picture_acc(picture_filename):
+    picture_path = os.path.join(current_app.root_path, 'static/acc_pics', picture_filename)
+    if os.path.exists(picture_path):
+        os.remove(picture_path) 
 
 def delete_picture(picture_filename):
     picture_path = os.path.join(current_app.root_path, 'static/menu_pics', picture_filename)

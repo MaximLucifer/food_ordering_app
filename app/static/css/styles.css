@@ -39,13 +39,22 @@ header nav ul li a {
 }
 
 /* Container Styles */
-.container, .auth-container, .order-container, .manage-orders-container, .manage-menu-container, .users-list-container, .contacts-container, .about-container, .profile-orders-container {
+.auth-container, .order-container, .manage-orders-container, .manage-menu-container, .users-list-container, .contacts-container, .about-container, .profile-orders-container {
     margin: 20px auto;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
+}
+
+.container {
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1500px;
 }
 
 .about-container, .profile-orders-container {
