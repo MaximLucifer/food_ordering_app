@@ -12,13 +12,23 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ff5733;
+    background-color: #ff5833;
     padding: 10px 20px;
     color: #fff;
 }
 
+header .logo a {
+    text-decoration: none;
+}
+
 header .logo img {
     height: 50px;
+}
+
+header .logo span {
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #fff;
 }
 
 header nav ul {
@@ -48,17 +58,33 @@ header nav ul li a {
     max-width: 600px;
 }
 
-.container {
+.container, .admin-container {
     margin: 20px auto;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 1500px;
+    max-width: 800px;
+}
+
+.admin-container {
+    max-width: 1600px;
 }
 
 .about-container, .profile-orders-container {
     max-width: 1250px;
+}
+
+.about-Pizza {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+}
+
+.about-Pizza img {
+    max-width: 100%; 
+    height: auto; 
 }
 
 /* Home Container Styles */
@@ -331,6 +357,7 @@ footer {
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     background-color: #fff;
     margin: 20px;
@@ -390,4 +417,80 @@ footer {
     font-weight: bold;
     color: #ff5733;
     font-size: 1.2em;
+}
+
+.cta {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #ff5733;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.cta:hover {
+    background-color: #ff2d00;
+}
+.dynamic-menu {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+}
+.dynamic-menu a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+.dynamic-menu a:hover {
+    background-color: #575757;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .menu-item {
+        width: 100%;
+    }
+
+    .footer-content .social-media {
+        flex-direction: column;
+    }
+
+    .footer-content .social-media a {
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header .logo span {
+        font-size: 18px; 
+        font-weight: bold; 
+        color: #fff;
+    }
+
+    .menu-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-item {
+        width: 90%;
+    }
 }

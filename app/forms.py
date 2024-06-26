@@ -51,7 +51,7 @@ class MenuItemForm(FlaskForm):
     name = StringField('Название', validators=[DataRequired()])
     price = FloatField('Цена', validators=[DataRequired()])
     description = TextAreaField('Описание')
-    picture = FileField('Установить фотографию', validators=[FileAllowed(['jpg', 'png', 'avif'])])
+    picture = FileField('Установить фотографию', validators=[FileAllowed(['jpg', 'png', 'avif', 'gif', 'mp4'])])
     submit = SubmitField('Добавить')
 
 class OrderForm(FlaskForm):

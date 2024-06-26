@@ -10,7 +10,10 @@
 <body>
     <header>
         <div class="logo">
-            <a href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Логотип"></a>
+            <a href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Логотип">
+                <span>Pizza Paradise</span>
+            </a>
+            
         </div>
         <nav>
             <ul>
@@ -36,7 +39,7 @@
     <footer>
         <div class="footer-content">
             <h2 id="contacts">Контакты</h2>
-            <p><strong>Адрес:</strong> ул. Пиццы, д. 123, Город Еды, ФК 12345</p>
+            <p><strong>Адрес:</strong> Загородное ш., 36/2с5, Оренбург</p>
             <p><strong>Телефон:</strong> (123) 456-7890</p>
             <p><strong>Email:</strong> contact@pizza.com</p>
             <div class="social-media">
